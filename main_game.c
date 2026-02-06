@@ -38,5 +38,5 @@ board[idx] = my_symbol;
             kill(opp_pid,SIGUSR2);
 
             my_turn = 0;
-            if(check_win()) break; //just for safety
+            if(check_win()) break; // just for safety
         }
