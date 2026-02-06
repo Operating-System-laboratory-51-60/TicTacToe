@@ -117,3 +117,30 @@ while(moves_count < 9)
             sleep(2);
             continue;
         }
+//logic for current player's turn and sending signal to opponent
+board[idx] = my_symbol;
+            moves_count++;
+            print_board();
+
+            if (check_win()) {
+                printf("YOU WON!\n");
+                // Send dummy moves to let opponent receive 'something' then they will check board state
+                // But actually, we just need to wake them up. 
+                // We send the move so they can update their board and see they lost.
+            }
+
+            // Mechanism to wake the opponent via signals
+            printf("Sending move to opponent...\n");
+            // Send SIGUSR1 'idx + 1' times because is idx is 0 then it is impossible to send
+            for(int i=0;i<idx+1;i++)
+            {
+                kill(opp_pid,SIGUSR1);
+                usleep(50); // sleeping for 1 second to ensure signals do not merge
+            }
+
+            // sending signal that i am done
+            kill(opp_pid,SIGUSR2);
+
+            my_turn = 0;
+            if(check_win()) break; // just for safety
+        }
