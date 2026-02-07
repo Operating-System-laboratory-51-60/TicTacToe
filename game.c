@@ -1,9 +1,9 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>   
 #include <string.h>   
+#include <sys/types.h>
 
 volatile int signal_count = 0;
 volatile int move_received = 0; 
